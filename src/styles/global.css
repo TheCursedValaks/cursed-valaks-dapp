@@ -1,0 +1,96 @@
+body {
+  margin: 0;
+  font-family: 'Creepster', cursive;
+  background-color: #000000;
+  color: #ff0000;
+  overflow-x: hidden;
+}
+
+nav {
+  background-color: #1a1a1a;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #ff0000;
+  text-decoration: none;
+  font-size: 24px;
+  margin: 0 30px; /* Maintains space between links */
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px #ff0000;
+}
+
+/* Updated container layout to include side panel */
+.home-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px; /* Space between container and panel */
+  padding: 20px;
+  max-width: 1200px; /* Limit total width */
+  margin: 0 auto;
+}
+
+.container {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid #ff0000;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  max-width: 600px; /* Keep container width */
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, transparent 70%);
+  animation: pulse 5s infinite;
+  z-index: 0;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0); }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.container > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Side panel styling */
+.side-panel {
+  flex: 0 0 200px; /* Fixed width */
+  background: rgba(26, 26, 26, 0.9);
+  padding: 15px;
+  border: 1px solid #ff0000;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  color: #ff0000;
+  text-align: left;
+}
+
+.side-panel p {
+  margin: 10px 0;
+  font-size: 16px;
+}
