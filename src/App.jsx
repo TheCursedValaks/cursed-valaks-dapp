@@ -1,21 +1,20 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import WalletConnect from './components/WalletConnect';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import CursedRituals from './pages/CursedRituals';
-import MyProfile from './pages/MyProfile';
-import './styles/global.css';
+import CursedLock from './pages/CursedLock';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <Router>
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cursed-rituals" element={<CursedRituals />} />
-        <Route path="/my-profile" element={<MyProfile />} />
+        <Route path="/cursed-lock" element={<CursedLock />} />
+        <Route path="/cursed-rituals" element={<div>Cursed Rituals Page</div>} />
+        <Route path="/my-profile" element={<div>My Profile Page</div>} />
       </Routes>
-    </Router>
+    </>
   );
 }
 

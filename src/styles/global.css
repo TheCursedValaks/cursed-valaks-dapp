@@ -12,6 +12,8 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  z-index: 1000;
 }
 
 .nav-links {
@@ -23,7 +25,7 @@ nav {
   color: #ff0000;
   text-decoration: none;
   font-size: 24px;
-  margin: 0 30px; /* Maintains space between links */
+  margin: 0 30px;
   transition: color 0.3s;
 }
 
@@ -32,14 +34,72 @@ nav {
   text-shadow: 0 0 10px #ff0000;
 }
 
-/* Updated container layout to include side panel */
+.wallet-section {
+  position: relative;
+}
+
+/* Custom wallet modal styling */
+.wallet-adapter-modal {
+  position: absolute !important;
+  top: 100% !important; /* Directly under the wallet button */
+  left: 0 !important; /* Aligned with the button */
+  width: 250px !important; /* Smaller width */
+  max-height: 200px !important; /* Smaller height */
+  background: rgba(26, 26, 26, 0.9) !important;
+  border: 1px solid #ff0000 !important;
+  border-radius: 5px !important;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5) !important;
+  color: #ff0000 !important;
+  font-family: 'Creepster', cursive !important;
+  z-index: 2000 !important;
+  overflow-y: auto !important;
+  display: none; /* Hidden by default, shown by JS */
+}
+
+.wallet-adapter-modal[style*="display: block"] {
+  display: block !important;
+}
+
+.wallet-adapter-modal button {
+  background: #ff0000 !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 8px 15px !important;
+  margin: 5px !important;
+  border-radius: 5px !important;
+  transition: background 0.3s !important;
+  width: 90% !important; /* Adjusted for compactness */
+  font-size: 16px !important;
+}
+
+.wallet-adapter-modal button:hover {
+  background: #cc0000 !important;
+  transform: scale(1.05) !important;
+  text-shadow: 0 0 5px #fff !important;
+}
+
+/* Hide modal if already connected (handled by JS, CSS fallback) */
+.wallet-adapter-modal.wallet-connected {
+  display: none !important;
+}
+
 .home-layout {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 20px; /* Space between container and panel */
+  gap: 20px;
   padding: 20px;
-  max-width: 1200px; /* Limit total width */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cursed-lock-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -53,7 +113,7 @@ nav {
   box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
   position: relative;
   overflow: hidden;
-  max-width: 600px; /* Keep container width */
+  max-width: 600px;
 }
 
 .container::before {
@@ -78,9 +138,8 @@ nav {
   z-index: 1;
 }
 
-/* Side panel styling */
 .side-panel {
-  flex: 0 0 200px; /* Fixed width */
+  flex: 0 0 200px;
   background: rgba(26, 26, 26, 0.9);
   padding: 15px;
   border: 1px solid #ff0000;
@@ -93,4 +152,46 @@ nav {
 .side-panel p {
   margin: 10px 0;
   font-size: 16px;
+}
+
+.mission-grid {
+  display: grid;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+button, .cursed-btn, .admin-btn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #ff0000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Creepster', cursive;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+button:hover, .cursed-btn:hover, .admin-btn:hover {
+  background: #cc0000;
+  transform: scale(1.05);
+  text-shadow: 0 0 5px #fff;
+}
+
+.cursed-btn:disabled {
+  background: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.launch-timer {
+  color: #ff0000; /* Timer text red */
+  font-size: 18px;
+}
+
+.timer-value {
+  color: #ffffff; /* Counter white */
+  font-size: 24px; /* Adjusted to 24px */
+  font-weight: bold;
 }
