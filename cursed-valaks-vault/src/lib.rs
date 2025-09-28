@@ -8,7 +8,7 @@ declare_id!("REPLACE_PROGRAM_ID");
 pub mod cursed_valaks_vault {
     use super::*;
 
-    // Initialize per-user vault (stores user pubkey, bump, and mint)
+    // Initialize user's vault (metadata)
     pub fn initialize_vault(ctx: Context<InitializeVault>) -> Result<()> {
         let vault = &mut ctx.accounts.vault;
         vault.user = ctx.accounts.user.key();
@@ -17,11 +17,10 @@ pub mod cursed_valaks_vault {
         Ok(())
     }
 
-    // Withdraw amount of tokens from vault_ata => user_ata
+    // Withdraw tokens from vault to user
     pub fn withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
         let vault = &ctx.accounts.vault;
 
-        // seeds used to sign as the PDA (vault)
         let seeds = &[
             b"vault",
             vault.user.as_ref(),
@@ -36,7 +35,6 @@ pub mod cursed_valaks_vault {
         };
         let cpi_program = ctx.accounts.token_program.to_account_info();
 
-        // Perform transfer with vault PDA as signer
         token::transfer(
             CpiContext::new_with_signer(cpi_program, cpi_accounts, signer),
             amount,
@@ -48,21 +46,17 @@ pub mod cursed_valaks_vault {
 
 #[account]
 pub struct Vault {
-    // 32 bytes
     pub user: Pubkey,
-    // 1 byte
     pub bump: u8,
-    // 32 bytes
     pub mint: Pubkey,
 }
 
 #[derive(Accounts)]
-#[instruction()]
 pub struct InitializeVault<'info> {
     #[account(mut)]
     pub user: Signer<'info>,
 
-    /// CHECK: The mint being used for rewards
+    /// The mint used for rewards
     pub mint: Account<'info, Mint>,
 
     #[account(
@@ -90,11 +84,9 @@ pub struct Withdraw<'info> {
     )]
     pub vault: Account<'info, Vault>,
 
-    /// Vault's token account (associated token account owned by vault PDA)
     #[account(mut, token::mint = vault.mint, token::authority = vault)]
     pub vault_ata: Account<'info, TokenAccount>,
 
-    /// User's token account (to receive tokens)
     #[account(mut, token::mint = vault.mint)]
     pub user_ata: Account<'info, TokenAccount>,
 
